@@ -1,4 +1,5 @@
 ﻿using MetaFrm.MVVM;
+using MetaFrm.Razor.Models;
 
 namespace MetaFrm.Razor.ViewModels
 {
@@ -7,5 +8,9 @@ namespace MetaFrm.Razor.ViewModels
     /// </summary>
     public partial class ProfileViewModel : BaseViewModel
     {
+        /// <summary>
+        /// ProfileModel
+        /// </summary>
+        public ProfileModel ProfileModel { get; set; } = new();
     }
 }

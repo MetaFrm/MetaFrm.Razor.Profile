@@ -1,3 +1,57 @@
-﻿<div class="my-component">
-    This component is defined in the <strong>MetaFrm.Razor.Profile_net6._0_</strong> library.
-</div>
+﻿@using MetaFrm.Control
+@using MetaFrm.Razor.Command
+@using MetaFrm.Razor.Field
+@using MetaFrm.Razor.Models
+@using MetaFrm.Razor.Title
+@using MetaFrm.Razor.Group
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@inherits BaseComponent
+
+<TitleControl Title="Profile"></TitleControl>
+
+<GroupControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@nameof(ProfileModel.USER_ID)" HeaderEditString="Profile" HeaderNewString="Profile" InnerContainer="true">
+    <Control>
+        <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.Save">
+            <DataAnnotationsValidator />
+
+            <div class="row pb-2">
+                <FieldControl Label="" IsColon="false" CssClassDiv="pb-2 col-md-6">
+                    <Control>
+                        <img class="figure-img rounded-pill float-start" width="140" height="140" alt="JPG/PNG Image User" src="@this.ProfileViewModel.ProfileModel.PROFILE_IMAGE" />
+                        <InputFile class="form-control form-control-sm" placeholder="JPG/PNG File" accept="image/png, image/jpeg, image/gif" OnChange="this.InputFileChangeEventArgs" />
+                    </Control>
+                </FieldControl>
+            </div>
+
+            <div class="row">
+                <FieldControl Label="Email address" CssClassDiv="pb-2 col-md-6" Value="this.ProfileViewModel.ProfileModel.EMAIL"></FieldControl>
+                <FieldControl Label="Nickname" CssClassDiv="pb-2 col-md-6">
+                    <Control>
+                        <InputText id="nickname" class="form-control" placeholder="* Nickname" @bind-Value="this.ProfileViewModel.ProfileModel.NICKNAME" />
+                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.NICKNAME)" />
+                    </Control>
+                </FieldControl>
+            </div>
+            <div class="row">
+                <FieldControl Label="Full name" CssClassDiv="py-2 col-md-6">
+                    <Control>
+                        <InputText id="fullname" class="form-control" placeholder="* Full name" @bind-Value="this.ProfileViewModel.ProfileModel.FULLNAME" />
+                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.FULLNAME)" />
+                    </Control>
+                </FieldControl>
+                <FieldControl Label="Phone Number" CssClassDiv="py-2 col-md-6">
+                    <Control>
+                        <InputText id="phonenumber" class="form-control" placeholder="* Phone Number" @bind-Value="this.ProfileViewModel.ProfileModel.PHONENUMBER" />
+                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PHONENUMBER)" />
+                    </Control>
+                </FieldControl>
+            </div>
+            <div class="row">
+                <FieldControl Label="Inactive Date" CssClassDiv="py-2 col-md-6" Value="@($"{this.ProfileViewModel.ProfileModel.INACTIVE_DATE:yyyy-MM-dd HH:mm}")"></FieldControl>
+            </div>
+
+            <CommandControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" SaveIsSubmit="true" />
+        </EditForm>
+    </Control>
+</GroupControl>

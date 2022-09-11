@@ -23,6 +23,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", 
 		src\ViewModels\ProfileViewModel.cs = src\ViewModels\ProfileViewModel.cs
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{92AC7F82-C18B-4522-8D47-B4F6CA7279E9}"
+	ProjectSection(SolutionItems) = preProject
+		src\Models\ProfileModel.cs = src\Models\ProfileModel.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +45,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{004BB7F9-1078-43A9-B348-F9BB71861639} = {B63692B9-77E2-41DA-B650-7BC4674A145F}
 		{C7C4CBD2-07C2-455C-82C3-C06F5DF662A1} = {25ECDBEE-1D14-41E9-BC75-19689271E616}
+		{92AC7F82-C18B-4522-8D47-B4F6CA7279E9} = {25ECDBEE-1D14-41E9-BC75-19689271E616}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AEF6054E-738D-4331-99F5-6C4CCA83F9E1}
