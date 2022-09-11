@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>MetaFrm.Razor</RootNamespace>
+    <AssemblyName>MetaFrm.Razor.Profile</AssemblyName>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <PackageId>MetaFrm.Razor.Profile.net6.0</PackageId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Meta Framework Razor Profile</Title>
+    <Version>6.0.0.0</Version>
+    <Authors>dsun</Authors>
+    <Company>Meta Framework</Company>
+    <Description>Meta Framework
+(Multi platform &amp; Meta management)</Description>
+    <Product>Meta Framework Razor Profile</Product>
+    <Copyright>Copyright 2022. dsun all rights reserved.</Copyright>
+    <PackageProjectUrl>https://github.com/MetaFrm/MetaFrm.Razor.Profile</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/MetaFrm/MetaFrm.Razor.Profile</RepositoryUrl>
+    <PackageTags>meta;framework;dotnet;maui;</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\src\Profile.razor.cs" Link="Profile.razor.cs" />
+    <Compile Include="..\src\ViewModels\ProfileViewModel.cs" Link="ViewModels\ProfileViewModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MetaFrm.Razor.Essentials.net6.0" Version="6.0.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.8" />
+  </ItemGroup>
+
+</Project>

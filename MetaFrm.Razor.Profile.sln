@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaFrm.Razor.Profile(net6.0)", "MetaFrm.Razor.Profile(net6.0)\MetaFrm.Razor.Profile(net6.0).csproj", "{F7A1F894-6DE5-480F-8868-224402258FAD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B63692B9-77E2-41DA-B650-7BC4674A145F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{004BB7F9-1078-43A9-B348-F9BB71861639}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\nuget.yml = .github\workflows\nuget.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{25ECDBEE-1D14-41E9-BC75-19689271E616}"
+	ProjectSection(SolutionItems) = preProject
+		src\Profile.razor.cs = src\Profile.razor.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", "{C7C4CBD2-07C2-455C-82C3-C06F5DF662A1}"
+	ProjectSection(SolutionItems) = preProject
+		src\ViewModels\ProfileViewModel.cs = src\ViewModels\ProfileViewModel.cs
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7A1F894-6DE5-480F-8868-224402258FAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A1F894-6DE5-480F-8868-224402258FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A1F894-6DE5-480F-8868-224402258FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A1F894-6DE5-480F-8868-224402258FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{004BB7F9-1078-43A9-B348-F9BB71861639} = {B63692B9-77E2-41DA-B650-7BC4674A145F}
+		{C7C4CBD2-07C2-455C-82C3-C06F5DF662A1} = {25ECDBEE-1D14-41E9-BC75-19689271E616}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AEF6054E-738D-4331-99F5-6C4CCA83F9E1}
+	EndGlobalSection
+EndGlobal
