@@ -29,8 +29,6 @@ namespace MetaFrm.Razor
                 if (!this.IsLogin())
                     this.Navigation?.NavigateTo("/", true);
 
-                //this.ProfileViewModel = await this.GetSession<ProfileViewModel>(nameof(this.ProfileViewModel));
-
                 this.Search();
 
                 this.StateHasChanged();
@@ -90,9 +88,6 @@ namespace MetaFrm.Razor
             finally
             {
                 this.ProfileViewModel.IsBusy = false;
-#pragma warning disable CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
-                //this.SetSession(nameof(ProfileViewModel), this.ProfileViewModel);
-#pragma warning restore CS4014 // 이 호출을 대기하지 않으므로 호출이 완료되기 전에 현재 메서드가 계속 실행됩니다.
             }
         }
 
