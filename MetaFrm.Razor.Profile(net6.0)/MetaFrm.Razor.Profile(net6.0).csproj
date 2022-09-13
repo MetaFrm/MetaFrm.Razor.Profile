@@ -11,7 +11,7 @@
     <PackageId>MetaFrm.Razor.Profile.net6.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>6.0.0.3</Version>
+    <Version>6.0.0.4</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Razor.Essentials.net6.0" Version="6.0.0.8" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net6.0" Version="6.0.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.8" />
   </ItemGroup>
 
