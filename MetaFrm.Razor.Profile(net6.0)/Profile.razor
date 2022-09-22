@@ -1,17 +1,15 @@
 ﻿@using MetaFrm.Control
-@using MetaFrm.Razor.Command
-@using MetaFrm.Razor.Field
+@using MetaFrm.Razor.Essentials
 @using MetaFrm.Razor.Models
-@using MetaFrm.Razor.Title
-@using MetaFrm.Razor.Group
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 @inherits BaseComponent
 
 <TitleControl Title="Profile"></TitleControl>
 
-<GroupControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@nameof(ProfileModel.USER_ID)" HeaderEditString="Profile" HeaderNewString="Profile" InnerContainer="true">
-    <Control>
+<CardControl CssClass="@(this.ProfileViewModel.ProfileModel == null || this.ProfileViewModel.ProfileModel.USER_ID == null ? "border-primary mb-2" : "mb-2")"
+             HeaderText="Profile">
+    <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.Save">
             <DataAnnotationsValidator />
 
@@ -53,5 +51,5 @@
 
             <CommandControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" SaveIsSubmit="true" />
         </EditForm>
-    </Control>
-</GroupControl>
+    </Text>
+</CardControl>
