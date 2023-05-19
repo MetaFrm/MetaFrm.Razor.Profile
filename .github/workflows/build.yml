@@ -52,7 +52,7 @@ jobs:
       run: unzip "${{env.METAFRM_UPLOADMODULE_ZIP}}"
       
     - name: run "${{env.METAFRM_UPLOADMODULE_FILE}}"
-      run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" ${{env.DLL_ID}} "${{env.DLL_PATH}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}"
+      run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" ${{env.DLL_ID}} "${{env.DLL_PATH}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}1"
       
   nuget:
 
