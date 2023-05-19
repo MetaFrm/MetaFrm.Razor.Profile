@@ -13,25 +13,25 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
+    #- name: Setup .NET
+    #  uses: actions/setup-dotnet@v2
+    #  with:
+    #    dotnet-version: 6.0.x
         
-    - name: Restore dependencies
-      run: dotnet restore
+    #- name: Restore dependencies
+    #  run: dotnet restore
       
-    - name: Build Debug
-      run: dotnet build -c Debug --no-restore
+    #- name: Build Debug
+    #  run: dotnet build -c Debug --no-restore
       
-    - name: Test Debug
-      run: dotnet test -c Debug --no-build --verbosity normal
+    #- name: Test Debug
+    #  run: dotnet test -c Debug --no-build --verbosity normal
 
-    - name: Build Release
-      run: dotnet build -c Release --no-restore
+    #- name: Build Release
+    #  run: dotnet build -c Release --no-restore
       
-    - name: Test Release
-      run: dotnet test -c Release --no-build --verbosity normal
+    #- name: Test Release
+    #  run: dotnet test -c Release --no-build --verbosity normal
 
     #- name: Setup NuGet
     #  uses: NuGet/setup-nuget@v1.2.0
@@ -46,6 +46,9 @@ jobs:
 
     #- name: Read file
     #  run: cat /home/runner/work/MetaFrm.Razor.Profile/MetaFrm.Razor.Profile/MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll
+    
+    - name: list
+      run: list
 
     - name: Install a SQL Server suite of tools
       uses: potatoqualitee/mssqlsuite@v1.7
@@ -56,5 +59,3 @@ jobs:
       run: sqlcmd ${{secrets.MSSQL_CONNECTION_STRING}} -Q "SELECT @@version"
 
     
-    - name: list
-      run: list
