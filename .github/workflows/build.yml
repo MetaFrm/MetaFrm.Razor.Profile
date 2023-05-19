@@ -46,13 +46,13 @@ jobs:
       run: cd temp
 
     - name: download
-      run: wget -d env.METAFRM_UPLOADMODULE_URL
+      run: wget -d $METAFRM_UPLOADMODULE_URL
 
     - name: unzip
-      run: unzip env.METAFRM_UPLOADMODULE_ZIP
+      run: unzip $METAFRM_UPLOADMODULE_ZIP
       
     - name: run ConsoleApp2
-      run: dotnet env.METAFRM_UPLOADMODULE_FILE env.DLL_ID env.DLL_PATH ${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}
+      run: dotnet $METAFRM_UPLOADMODULE_FILE $DLL_ID $DLL_PATH ${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}
 
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.2.0
