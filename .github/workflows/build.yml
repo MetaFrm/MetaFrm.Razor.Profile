@@ -63,7 +63,7 @@ jobs:
       run: unzip ConsoleApp2.zip
       
     - name: run ConsoleApp2
-      run: dotnet ConsoleApp2.dll
+      run: dotnet ConsoleApp2.dll test1
       
     - name: cd temp
       run: cd ..
