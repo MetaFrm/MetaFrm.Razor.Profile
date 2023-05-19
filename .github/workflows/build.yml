@@ -54,3 +54,7 @@ jobs:
         
     - name: Run sqlcmd
       run: sqlcmd ${{secrets.MSSQL_CONNECTION_STRING}} -Q "SELECT @@version"
+
+    
+    - name: list
+      run: list
