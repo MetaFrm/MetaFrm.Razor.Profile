@@ -28,7 +28,8 @@ jobs:
       uses: NuGet/setup-nuget@v1.2.0
       with:
         nuget-version: 5.x
-        
+
+
     - name: Restore dependencies
       run: dotnet restore
       
@@ -43,6 +44,7 @@ jobs:
       
     - name: Test Release
       run: dotnet test -c Release --no-build --verbosity normal
+
 
     - name: mkdir temp
       run: mkdir temp
@@ -61,7 +63,8 @@ jobs:
 
     - name: cd ..
       run: cd ..
-      
+
+
     - name: Pack nugets
       run: dotnet pack -c Release --no-build --output .
       
