@@ -44,7 +44,7 @@ jobs:
     #- name: Push to NuGet
     #  run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
 
-    - name: mkdir
+    - name: mkdir temp
       run: mkdir temp
 
     - name: cd temp
