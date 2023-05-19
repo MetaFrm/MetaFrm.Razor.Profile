@@ -34,7 +34,7 @@ jobs:
       run: dotnet test -c Release --no-build --verbosity normal
 
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@vlatest
+      uses: NuGet/setup-nuget@v1.2.0
       with:
         nuget-version: 5.x
       
