@@ -57,13 +57,13 @@ jobs:
       run: cd temp
 
     - name: download
-      run: wget -d https://www.metafrm.net/ConsoleApp2.zip
+      run: wget -d "https://www.metafrm.net/Meta Framework Management System UploadModule.zip"
 
     - name: unzip
-      run: unzip ConsoleApp2.zip
+      run: unzip "Meta Framework Management System UploadModule.zip"
       
     - name: run ConsoleApp2
-      run: dotnet ConsoleApp2.dll test1
+      run: dotnet "Meta Framework Management System UploadModule.dll" test1
       
     - name: cd temp
       run: cd ..
