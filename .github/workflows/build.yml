@@ -51,7 +51,7 @@ jobs:
     - name: unzip
       run: unzip "${{env.METAFRM_UPLOADMODULE_ZIP}}"
       
-    - name: run ConsoleApp2
+    - name: run "${{env.METAFRM_UPLOADMODULE_FILE}}"
       run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" ${{env.DLL_ID}} "${{env.DLL_PATH}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}"
 
     - name: Setup NuGet
