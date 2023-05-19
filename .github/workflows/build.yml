@@ -53,6 +53,9 @@ jobs:
       
     - name: run "${{env.METAFRM_UPLOADMODULE_FILE}}"
       run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" ${{env.DLL_ID}} "${{env.DLL_PATH}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}"
+      
+    - name: cd temp
+      run: cd ..
 
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.2.0
