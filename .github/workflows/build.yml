@@ -23,6 +23,11 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.7
+      with:
+        nuget-version: 5.x
         
     - name: Restore dependencies
       run: dotnet restore
@@ -56,11 +61,6 @@ jobs:
       
     - name: cd temp
       run: cd ..
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.2.0
-      with:
-        nuget-version: 5.x
       
     - name: Pack nugets
       run: dotnet pack -c Release --no-build
