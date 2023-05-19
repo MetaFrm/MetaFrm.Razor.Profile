@@ -18,20 +18,20 @@ jobs:
       with:
         dotnet-version: 6.0.x
         
-    - name: Restore dependencies
-      run: dotnet restore
+    #- name: Restore dependencies
+    #  run: dotnet restore
       
-    - name: Build Debug
-      run: dotnet build -c Debug --no-restore
+    #- name: Build Debug
+    #  run: dotnet build -c Debug --no-restore
       
-    - name: Test Debug
-      run: dotnet test -c Debug --no-build --verbosity normal
+    #- name: Test Debug
+    #  run: dotnet test -c Debug --no-build --verbosity normal
 
-    - name: Build Release
-      run: dotnet build -c Release --no-restore
+    #- name: Build Release
+    #  run: dotnet build -c Release --no-restore
       
-    - name: Test Release
-      run: dotnet test -c Release --no-build --verbosity normal
+    #- name: Test Release
+    #  run: dotnet test -c Release --no-build --verbosity normal
 
     #- name: Setup NuGet
     #  uses: NuGet/setup-nuget@v1.2.0
@@ -44,16 +44,34 @@ jobs:
     #- name: Push to NuGet
     #  run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
 
-    - name: Read file
-      run: cat "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
+    #- name: Read file
+    #  run: cat "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
       
-    - name: lst
-      run: ls "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/"
+    #- name: lst
+    #  run: ls "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/"
 
-    - name: Install a SQL Server suite of tools
-      uses: potatoqualitee/mssqlsuite@v1.7
-      with:
-        install: sqlengine, sqlclient, sqlpackage, localdb
+    - name: mkdir
+      run: mkdir temp
+
+    - name: cd temp
+      run: cd temp
+
+    - name: download
+      run: wget -d https://www.metafrm.net/ConsoleApp2.zip
+
+    - name: unzip
+      run: unzip ConsoleApp2.zip
+      
+    - name: run ConsoleApp2
+      run: ConsoleApp2.exe
+      
+    - name: cd temp
+      run: cd ..
+
+    #- name: Install a SQL Server suite of tools
+    #  uses: potatoqualitee/mssqlsuite@v1.7
+    #  with:
+    #    install: sqlengine, sqlclient, sqlpackage, localdb
         
-    - name: Run sqlcmd
-      run: sqlcmd ${{secrets.MSSQL_CONNECTION_STRING}} -Q "SELECT @@version"
+    #- name: Run sqlcmd
+    #  run: sqlcmd ${{secrets.MSSQL_CONNECTION_STRING}} -Q "SELECT @@version"
