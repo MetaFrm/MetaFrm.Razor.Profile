@@ -63,7 +63,7 @@ jobs:
       run: unzip "Meta Framework Management System UploadModule.zip"
       
     - name: run ConsoleApp2
-      run: dotnet "Meta Framework Management System UploadModule.dll" test1
+      run: dotnet "Meta Framework Management System UploadModule.dll" 49 "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
       
     - name: cd temp
       run: cd ..
