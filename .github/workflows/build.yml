@@ -44,12 +44,6 @@ jobs:
     #- name: Push to NuGet
     #  run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
 
-    #- name: Read file
-    #  run: cat "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
-      
-    #- name: lst
-    #  run: ls "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/"
-
     - name: mkdir
       run: mkdir temp
 
@@ -67,11 +61,3 @@ jobs:
       
     - name: cd temp
       run: cd ..
-
-    #- name: Install a SQL Server suite of tools
-    #  uses: potatoqualitee/mssqlsuite@v1.7
-    #  with:
-    #    install: sqlengine, sqlclient, sqlpackage, localdb
-        
-    #- name: Run sqlcmd
-    #  run: sqlcmd ${{secrets.MSSQL_CONNECTION_STRING}} -Q "SELECT @@version"
