@@ -41,8 +41,14 @@ jobs:
     - name: Pack nugets
       run: dotnet pack -c Release --no-build
       
-    - name: Push to NuGet
-      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
+    #- name: Push to NuGet
+    #  run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
 
-    - name: Read file
-      run: cat bin/Release/net6.0/MetaFrm.Razor.Profile.dll
+      
+    - name: Install MSSQL suite
+      uses: mssql-suite@v1
+      with:
+        install: sqlengine, sqlclient, sqlpackage, localdb
+
+    #- name: Read file
+    #  run: cat bin/Release/net6.0/MetaFrm.Razor.Profile.dll
