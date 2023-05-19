@@ -23,6 +23,11 @@ jobs:
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.2.0
+      with:
+        nuget-version: 5.x
         
     - name: Restore dependencies
       run: dotnet restore
@@ -51,34 +56,11 @@ jobs:
     - name: unzip
       run: unzip "${{env.METAFRM_UPLOADMODULE_ZIP}}"
       
-    - name: run "${{env.METAFRM_UPLOADMODULE_FILE}}"
+    - name: Upload Module
       run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" ${{env.DLL_ID}} "${{env.DLL_PATH}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}1"
-      
-  nuget:
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
-
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.7
-      with:
-        nuget-version: 5.x
-      
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Build Release
-      run: dotnet build -c Release --no-restore
-      
-    - name: Test Release
-      run: dotnet test -c Release --no-build --verbosity normal
+    - name: cd ..
+      run: cd ..
       
     - name: Pack nugets
       run: dotnet pack -c Release --no-build --output .
