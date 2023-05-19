@@ -9,6 +9,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      METAFRM_UPLOADMODULE_URL: "https://www.metafrm.net/Meta Framework Management System UploadModule.zip"
+      METAFRM_UPLOADMODULE_ZIP: "Meta Framework Management System UploadModule.zip"
+      METAFRM_UPLOADMODULE_FILE: "Meta Framework Management System UploadModule.dll"
+      DLL_ID: 49
+      DLL_PATH: "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
 
     steps:
     - uses: actions/checkout@v3
@@ -33,17 +39,6 @@ jobs:
     - name: Test Release
       run: dotnet test -c Release --no-build --verbosity normal
 
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.2.0
-      with:
-        nuget-version: 5.x
-      
-    #- name: Pack nugets
-    #  run: dotnet pack -c Release --no-build
-      
-    #- name: Push to NuGet
-    #  run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
-
     - name: mkdir temp
       run: mkdir temp
 
@@ -51,13 +46,21 @@ jobs:
       run: cd temp
 
     - name: download
-      run: wget -d "https://www.metafrm.net/Meta Framework Management System UploadModule.zip"
+      run: wget -d env.METAFRM_UPLOADMODULE_URL
 
     - name: unzip
-      run: unzip "Meta Framework Management System UploadModule.zip"
+      run: unzip env.METAFRM_UPLOADMODULE_ZIP
       
     - name: run ConsoleApp2
-      run: dotnet "Meta Framework Management System UploadModule.dll" 49 "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
+      run: dotnet env.METAFRM_UPLOADMODULE_FILE env.DLL_ID env.DLL_PATH ${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.2.0
+      with:
+        nuget-version: 5.x
       
-    - name: cd temp
-      run: cd ..
+    - name: Pack nugets
+      run: dotnet pack -c Release --no-build
+      
+    - name: Push to NuGet
+      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
