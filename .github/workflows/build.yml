@@ -43,6 +43,12 @@ jobs:
       
     - name: Test Release
       run: dotnet test -c Release --no-build --verbosity normal
+      
+    - name: Pack nugets
+      run: dotnet pack -c Release --no-build
+      
+    - name: Push to NuGet
+      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
 
     - name: mkdir temp
       run: mkdir temp
@@ -58,12 +64,3 @@ jobs:
       
     - name: run "${{env.METAFRM_UPLOADMODULE_FILE}}"
       run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" ${{env.DLL_ID}} "${{env.DLL_PATH}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}"
-      
-    - name: cd temp
-      run: cd ..
-      
-    - name: Pack nugets
-      run: dotnet pack -c Release --no-build
-      
-    - name: Push to NuGet
-      run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
