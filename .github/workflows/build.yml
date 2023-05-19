@@ -48,7 +48,7 @@ jobs:
       run: cat "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
       
     - name: lst
-      run: lt
+      run: ls
 
     - name: Install a SQL Server suite of tools
       uses: potatoqualitee/mssqlsuite@v1.7
