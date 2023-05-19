@@ -13,41 +13,41 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: 6.0.x
+    #- name: Setup .NET
+    #  uses: actions/setup-dotnet@v2
+    #  with:
+    #    dotnet-version: 6.0.x
         
-    - name: Restore dependencies
-      run: dotnet restore
+    #- name: Restore dependencies
+    #  run: dotnet restore
       
-    - name: Build Debug
-      run: dotnet build -c Debug --no-restore
+    #- name: Build Debug
+    #  run: dotnet build -c Debug --no-restore
       
-    - name: Test Debug
-      run: dotnet test -c Debug --no-build --verbosity normal
+    #- name: Test Debug
+    #  run: dotnet test -c Debug --no-build --verbosity normal
 
-    - name: Build Release
-      run: dotnet build -c Release --no-restore
+    #- name: Build Release
+    #  run: dotnet build -c Release --no-restore
       
-    - name: Test Release
-      run: dotnet test -c Release --no-build --verbosity normal
+    #- name: Test Release
+    #  run: dotnet test -c Release --no-build --verbosity normal
 
-    - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.2.0
-      with:
-        nuget-version: 5.x
+    #- name: Setup NuGet
+    #  uses: NuGet/setup-nuget@v1.2.0
+    #  with:
+    #    nuget-version: 5.x
       
-    - name: Pack nugets
-      run: dotnet pack -c Release --no-build
+    #- name: Pack nugets
+    #  run: dotnet pack -c Release --no-build
       
     #- name: Push to NuGet
     #  run: dotnet nuget push "*.nupkg" --api-key ${{secrets.NUGET_AUTH_TOKEN}} --source https://api.nuget.org/v3/index.json
+
+    - name: Read file
+      run: cat bin/Release/net6.0/MetaFrm.Razor.Profile.dll
 
     - name: Install a SQL Server suite of tools
       uses: potatoqualitee/mssqlsuite@v1.7
       with:
         install: sqlengine, sqlclient, sqlpackage, localdb
-
-    #- name: Read file
-    #  run: cat bin/Release/net6.0/MetaFrm.Razor.Profile.dll
