@@ -10,13 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      METAFRM_UPLOADMODULE_URL: "https://download.metafrm.net/github/MetaFrameworkManagementSystemUploadModule.zip"
-      METAFRM_UPLOADMODULE_ZIP: "MetaFrameworkManagementSystemUploadModule.zip"
-      METAFRM_UPLOADMODULE_FILE: "MetaFrameworkManagementSystemUploadModule.dll"
       DLL_ID: 49
       DLL_PATH: "MetaFrm.Razor.Profile(net6.0)/bin/Release/net6.0/MetaFrm.Razor.Profile.dll"
       UPLOAD_MODURE: "Y"
       PUSH_NUGET: "Y"
+      METAFRM_UPLOADMODULE_URL: "https://download.metafrm.net/github/MetaFrameworkManagementSystemUploadModule.zip"
+      METAFRM_UPLOADMODULE_ZIP: "temp/MetaFrameworkManagementSystemUploadModule.zip"
+      METAFRM_UPLOADMODULE_FILE: "temp/MetaFrameworkManagementSystemUploadModule.dll"
       
     steps:
     - uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
 
     - name: Download Upload Module (Windows)
       if: runner.os == 'Windows'
-      run: curl ${{env.METAFRM_UPLOADMODULE_URL}} --output "temp\${{env.METAFRM_UPLOADMODULE_ZIP}}"
+      run: curl ${{env.METAFRM_UPLOADMODULE_URL}} --output "${{env.METAFRM_UPLOADMODULE_ZIP}}"
       
     - name: Download unzip.exe (Windows)
       if: runner.os == 'Windows'
@@ -51,11 +51,11 @@ jobs:
 
     - name: Unzip
       if: runner.os != 'Windows'
-      run: unzip "temp/${{env.METAFRM_UPLOADMODULE_ZIP}}" -d temp
+      run: unzip "${{env.METAFRM_UPLOADMODULE_ZIP}}" -d temp
       
     - name: Unzip (Windows)
       if: runner.os == 'Windows'
-      run: temp\unzip.exe "temp/${{env.METAFRM_UPLOADMODULE_ZIP}}" -d temp
+      run: temp\unzip.exe "${{env.METAFRM_UPLOADMODULE_ZIP}}" -d temp
 
 
     - name: Restore dependencies
@@ -102,7 +102,7 @@ jobs:
     - name: Upload Module
       id: ST6
       if: env.UPLOAD_MODURE == 'Y'
-      run: dotnet temp/${{env.METAFRM_UPLOADMODULE_FILE}} "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}" "${{github.event.pusher.email}}" "upload" ${{env.DLL_ID}} "${{env.DLL_PATH}}"
+      run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}" "${{github.event.pusher.email}}" "upload" ${{env.DLL_ID}} "${{env.DLL_PATH}}"
     - name: if failure
       if: ${{ failure() && steps.ST1.outcome != 'failure' && steps.ST2.outcome != 'failure' && steps.ST3.outcome != 'failure' && steps.ST4.outcome != 'failure' && steps.ST5.outcome != 'failure' }}
       run: dotnet "${{env.METAFRM_UPLOADMODULE_FILE}}" "${{secrets.METAFRM_UPLOADMODULE_ACCESSKEY}}" "${{github.event.pusher.email}}" "notification" "Upload Module Fail !!" "${{env.DLL_PATH}}"
