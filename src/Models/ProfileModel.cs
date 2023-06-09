@@ -54,5 +54,39 @@ namespace MetaFrm.Razor.Models
         /// INACTIVE_DATE
         /// </summary>
         public DateTime? INACTIVE_DATE { get; set; }
+
+        /// <summary>
+        /// AccessCodeVisible
+        /// </summary>
+        public bool AccessCodeVisible { get; set; }
+
+        /// <summary>
+        /// AccessCode
+        /// </summary>
+        public string? AccessCode { get; set; }
+
+        private string? _inputAccessCode;
+        /// <summary>
+        /// InputAccessCode
+        /// </summary>
+        public string? InputAccessCode
+        {
+            get
+            {
+                return this._inputAccessCode;
+            }
+            set
+            {
+                this._inputAccessCode = value;
+
+                this.AccessCodeConfirmVisible = this._inputAccessCode == this.AccessCode;
+
+            }
+        }
+
+        /// <summary>
+        /// AccessCodeConfirmVisible
+        /// </summary>
+        public bool AccessCodeConfirmVisible { get; set; }
     }
 }

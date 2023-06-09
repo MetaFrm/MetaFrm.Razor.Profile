@@ -52,3 +52,55 @@
         </EditForm>
     </Text>
 </CardControl>
+
+<hr/>
+
+<CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))"
+             HeaderText="Withdrawal" CssClass="card bg-dark">
+    <Text>
+        <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.OnWithdrawalClick" OnInvalidSubmit="this.HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+
+            
+            @if (!this.ProfileViewModel.ProfileModel.AccessCodeVisible)
+            {
+                <div class="row">
+                    <div class="row pb-2" style="color:red;">
+                        <FieldControl Label="" IsColon="false" Value="@("All projects in use will be deleted. Please be careful.")"></FieldControl>
+                        <FieldControl Label="" IsColon="false">
+                            <Control>
+                                <button type="button" class="btn btn-primary btn-block w-100" @onclick="Withdrawal" disabled="@(this.ProfileViewModel.ProfileModel.AccessCodeVisible && !this.ProfileViewModel.IsBusy)">Get Access Code</button>
+                            </Control>
+                        </FieldControl>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row pb-0">
+                    <FieldControl Label="Remaining time" CssClassLabel="text-center" IsColon="false">
+                        <Control>
+                            <div class="text-center">@($"{this.RemainTime.ToString("hh\\:mm\\:ss")}")</div>
+                        </Control>
+                    </FieldControl>
+                    <FieldControl Label="Email Verification Code" IsColon="false">
+                        <Control>
+                            <input id="inputaccesscode" type="text" class="form-control @(this.ProfileViewModel.ProfileModel.AccessCodeConfirmVisible && !this.ProfileViewModel.IsBusy?"is-valid":"is-invalid")" placeholder="Access Code"
+                            @bind-value="this.ProfileViewModel.ProfileModel.InputAccessCode" @bind-value:event="oninput" @onkeydown="@InputAccessCodeKeydown"
+                                   disabled="@(!this.ProfileViewModel.ProfileModel.AccessCodeVisible && !this.ProfileViewModel.IsBusy)" />
+                        </Control>
+                    </FieldControl>
+                </div>
+
+                <div class="row">
+                    <FieldControl Label="" IsColon="false" Value="@("")"></FieldControl>
+                    <FieldControl Label="" IsColon="false">
+                        <Control>
+                            <button type="submit" class="btn btn-primary btn-block w-100" disabled="@(!this.ProfileViewModel.ProfileModel.AccessCodeVisible)"><span class="oi oi-pencil" /> Withdrawal</button>
+                        </Control>
+                    </FieldControl>
+                </div>
+            }
+        </EditForm>
+    </Text>
+</CardControl>
