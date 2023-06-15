@@ -11,7 +11,7 @@
     <PackageId>MetaFrm.Razor.Profile.net6.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>6.0.0.33</Version>
+    <Version>6.0.0.34</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
