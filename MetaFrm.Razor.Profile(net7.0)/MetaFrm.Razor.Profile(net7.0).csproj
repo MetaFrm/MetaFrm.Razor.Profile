@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
-
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
@@ -11,7 +10,7 @@
     <PackageId>MetaFrm.Razor.Profile.net7.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>7.0.0.12</Version>
+    <Version>7.0.0.13</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
@@ -22,40 +21,31 @@
     <RepositoryUrl>https://github.com/MetaFrm/MetaFrm.Razor.Profile</RepositoryUrl>
     <PackageTags>meta;framework;dotnet;maui;</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
-	
-	<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\src\Models\ProfileModel.cs" Link="Models\ProfileModel.cs" />
     <Compile Include="..\src\Profile.razor.cs" Link="Profile.razor.cs" />
     <Compile Include="..\src\ViewModels\ProfileViewModel.cs" Link="ViewModels\ProfileViewModel.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="MetaFrm.Core.net7.0" Version="7.0.0.12" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net7.0" Version="7.0.0.12" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net7.0" Version="7.0.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.7" />
   </ItemGroup>
-
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
 </Project>
