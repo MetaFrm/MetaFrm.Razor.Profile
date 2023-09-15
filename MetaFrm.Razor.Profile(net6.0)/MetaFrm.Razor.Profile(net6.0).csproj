@@ -10,7 +10,7 @@
     <PackageId>MetaFrm.Razor.Profile.net6.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>6.0.0.60</Version>
+    <Version>6.0.0.62</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
@@ -35,9 +35,9 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Core.net6.0" Version="6.0.0.60" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net6.0" Version="6.0.0.60" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.21" />
+    <PackageReference Include="MetaFrm.Core.net6.0" Version="6.0.0.62" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net6.0" Version="6.0.0.62" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.22" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

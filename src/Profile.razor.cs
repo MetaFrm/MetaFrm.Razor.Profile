@@ -26,6 +26,8 @@ namespace MetaFrm.Razor
         private TimeSpan RemainTimeOrg { get; set; } = new TimeSpan(0, 5, 0);
 
         private TimeSpan RemainTime { get; set; }
+
+        Auth.AuthenticationStateProvider AuthenticationState;
         #endregion
 
 
@@ -35,6 +37,8 @@ namespace MetaFrm.Razor
         /// </summary>
         protected override void OnInitialized()
         {
+            this.AuthenticationState ??= (this.AuthStateProvider as Auth.AuthenticationStateProvider) ?? (Auth.AuthenticationStateProvider)Factory.CreateInstance(typeof(Auth.AuthenticationStateProvider));
+
             try
             {
                 string[] time = this.GetAttribute("RemainingTime").Split(":");
@@ -58,7 +62,7 @@ namespace MetaFrm.Razor
         {
             if (firstRender)
             {
-                if (!this.IsLogin())
+                if (!this.AuthenticationState.IsLogin())
                     this.Navigation?.NavigateTo("/", true);
 
                 this.Search();
@@ -88,10 +92,10 @@ namespace MetaFrm.Razor
 
                 ServiceData serviceData = new()
                 {
-                    Token = this.UserClaim("Token")
+                    Token = this.AuthenticationState.UserClaim("Token")
                 };
                 serviceData["1"].CommandText = this.GetAttribute("Select.Profile");
-                serviceData["1"].AddParameter("USER_ID", DbType.Int, 3, this.UserClaim("Account.USER_ID").ToInt());
+                serviceData["1"].AddParameter("USER_ID", DbType.Int, 3, this.AuthenticationState.UserClaim("Account.USER_ID").ToInt());
 
                 response = serviceData.ServiceRequest(serviceData);
 
@@ -148,7 +152,7 @@ namespace MetaFrm.Razor
                 ServiceData serviceData = new()
                 {
                     TransactionScope = true,
-                    Token = this.UserClaim("Token")
+                    Token = this.AuthenticationState.UserClaim("Token")
                 };
                 serviceData["1"].CommandText = this.GetAttribute("Save.Profile");
                 serviceData["1"].AddParameter(nameof(this.ProfileViewModel.ProfileModel.USER_ID), DbType.Int, 3, this.ProfileViewModel.ProfileModel.USER_ID);
@@ -193,7 +197,7 @@ namespace MetaFrm.Razor
             {
                 this.ProfileViewModel.IsBusy = true;
 
-                if (this.IsLogin())
+                if (this.AuthenticationState.IsLogin())
                 {
                     Response response;
 
@@ -204,7 +208,7 @@ namespace MetaFrm.Razor
                         ServiceData serviceData = new()
                         {
                             TransactionScope = true,
-                            Token = this.UserClaim("Token")
+                            Token = this.AuthenticationState.UserClaim("Token")
                         };
                         serviceData["1"].CommandText = this.GetAttribute("Withdrawal");
                         serviceData["1"].AddParameter(nameof(this.ProfileViewModel.ProfileModel.EMAIL), DbType.NVarChar, 100, this.ProfileViewModel.ProfileModel.EMAIL);
@@ -263,7 +267,7 @@ namespace MetaFrm.Razor
 
                 this.ProfileViewModel.IsBusy = true;
 
-                if (this.IsLogin())
+                if (this.AuthenticationState.IsLogin())
                 {
                     Response response;
 
@@ -272,7 +276,7 @@ namespace MetaFrm.Razor
                         ServiceData serviceData = new()
                         {
                             TransactionScope = true,
-                            Token = this.UserClaim("Token")
+                            Token = this.AuthenticationState.UserClaim("Token")
                         };
                         serviceData["1"].CommandText = this.GetAttribute("WithdrawalCheck");
                         serviceData["1"].AddParameter(nameof(this.ProfileViewModel.ProfileModel.USER_ID), DbType.Int, 3, this.ProfileViewModel.ProfileModel.USER_ID);
@@ -309,7 +313,7 @@ namespace MetaFrm.Razor
             }
         }
 
-        private System.Timers.Timer timer = new(1000);
+        private readonly System.Timers.Timer timer = new(1000);
         private async void GetAccessCode(string action)
         {
             try
@@ -318,7 +322,7 @@ namespace MetaFrm.Razor
 
                 if (this.ProfileViewModel.ProfileModel.EMAIL != null && !this.ProfileViewModel.ProfileModel.AccessCodeVisible)
                 {
-                    this.ProfileViewModel.ProfileModel.AccessCode = await this.AccessCodeServiceRequestAsync(this.UserClaim("Token"), this.ProfileViewModel.ProfileModel.EMAIL, "WITHDRAWAL");
+                    this.ProfileViewModel.ProfileModel.AccessCode = await this.AccessCodeServiceRequestAsync(this.AuthenticationState.UserClaim("Token"), this.ProfileViewModel.ProfileModel.EMAIL, "WITHDRAWAL");
                     this._isFocusElement = false;
                     this.ProfileViewModel.ProfileModel.AccessCodeVisible = true;
 
