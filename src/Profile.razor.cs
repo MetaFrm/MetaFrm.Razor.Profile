@@ -37,6 +37,8 @@ namespace MetaFrm.Razor
         {
             try
             {
+                this.ProfileViewModel.ProfileModel.CssClassCardBackground = this.GetAttribute("CssClassCardBackground");
+
                 string[] time = this.GetAttribute("RemainingTime").Split(":");
 
                 this.RemainTimeOrg = new TimeSpan(time[0].ToInt(), time[1].ToInt(), time[2].ToInt());

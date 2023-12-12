@@ -7,7 +7,7 @@
 
 <TitleControl Title="Profile"></TitleControl>
 <CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))"
-             HeaderText="Profile" CssClass="card bg-dark">
+             HeaderText="Profile" CssClass="@this.ProfileViewModel.ProfileModel.CssClassCardBackground">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.Save">
             <DataAnnotationsValidator />
@@ -56,7 +56,7 @@
 <hr/>
 
 <CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))"
-             HeaderText="Withdrawal" CssClass="card bg-dark">
+             HeaderText="Withdrawal" CssClass="@this.ProfileViewModel.ProfileModel.CssClassCardBackground">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.OnWithdrawalClick" OnInvalidSubmit="this.HandleInvalidSubmit">
             <DataAnnotationsValidator />

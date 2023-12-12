@@ -84,6 +84,11 @@ namespace MetaFrm.Razor.Models
         }
 
         /// <summary>
+        /// CssClassCardBackground
+        /// </summary>
+        public string? CssClassCardBackground { get; set; }
+
+        /// <summary>
         /// AccessCodeConfirmVisible
         /// </summary>
         public bool AccessCodeConfirmVisible { get; set; }
