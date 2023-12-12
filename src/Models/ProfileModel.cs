@@ -84,9 +84,9 @@ namespace MetaFrm.Razor.Models
         }
 
         /// <summary>
-        /// CssClassCardBackground
+        /// CssClassCard
         /// </summary>
-        public string? CssClassCardBackground { get; set; }
+        public string? CssClassCard { get; set; }
 
         /// <summary>
         /// AccessCodeConfirmVisible
