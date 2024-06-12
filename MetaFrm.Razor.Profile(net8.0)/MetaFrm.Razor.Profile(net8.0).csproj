@@ -36,7 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MetaFrm.Core.net8.0" Version="8.0.3.1" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net8.0" Version="8.0.3.1" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net8.0" Version="8.0.3.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5" />
   </ItemGroup>
   <ItemGroup>
