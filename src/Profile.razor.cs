@@ -164,6 +164,7 @@ namespace MetaFrm.Razor
                 if (response.Status == Status.OK)
                 {
                     this.ToastShow("Completed", $"Profile registered successfully.", Alert.ToastDuration.Long);
+                    this.OnAction(this, new MetaFrmEventArgs { Action = "ProfileImage", Value = null });
                 }
                 else
                 {
