@@ -163,7 +163,7 @@ namespace MetaFrm.Razor
 
                 if (response.Status == Status.OK)
                 {
-                    this.ToastShow("Completed", $"Profile registered successfully.", Alert.ToastDuration.Long);
+                    this.ToastShow("Completed", this.Localization["프로필이 성공적으로 등록되었습니다."], ToastDuration.Long);
                     this.OnAction(this, new MetaFrmEventArgs { Action = "ProfileImage", Value = null });
                 }
                 else
@@ -218,7 +218,7 @@ namespace MetaFrm.Razor
 
                         if (response.Status == Status.OK)
                         {
-                            this.ToastShow("Withdrawal", "Withdrawal is complete.", ToastDuration.Long);
+                            this.ToastShow("Withdrawal", this.Localization["탈퇴 완료 되었습니다."], ToastDuration.Long);
 
                             this.OnAction(this, new MetaFrmEventArgs { Action = "Logout" });
                             return true;
@@ -255,14 +255,14 @@ namespace MetaFrm.Razor
 
         private void Withdrawal()
         {
-            this.ModalShow($"Question", "All projects in use will be deleted. Would you like to withdrawal?", new() { { "Withdrawal", Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, WithdrawalCheck));
+            this.ModalShow($"Question", this.Localization["탈퇴하시겠습니까?"], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.WithdrawalCheck));
         }
 
         private async void WithdrawalCheck(string action)
         {
             try
             {
-                if (action != "Withdrawal") return;
+                if (action != this.Localization["탈퇴"]) return;
 
                 this.ProfileViewModel.IsBusy = true;
 
@@ -287,9 +287,9 @@ namespace MetaFrm.Razor
                             if (response.DataSet != null && response.DataSet.DataTables.Count > 0 && response.DataSet.DataTables[0].DataRows.Count > 0)
                             {
                                 if (response.DataSet.DataTables[0].DataRows[0].Int("CNT") > 0)
-                                    this.ModalShow($"Question", "The created project exists. All will be deleted upon withdrawal. Are you sure you want to withdrawal?", new() { { "Withdrawal", Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, GetAccessCode));
+                                    this.ModalShow($"Question", this.Localization[this.GetAttribute("WithdrawalCheckQuestion")], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.GetAccessCode));
                                 else
-                                    this.ModalShow($"Question", "Are you sure you want to withdrawal?", new() { { "Withdrawal", Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, GetAccessCode));
+                                    this.ModalShow($"Question", this.Localization["정말 탈퇴하시겠습니까?"], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.GetAccessCode));
                             }
                         }
                         else
@@ -317,7 +317,7 @@ namespace MetaFrm.Razor
         {
             try
             {
-                if (action != "Withdrawal") return;
+                if (action != this.Localization["탈퇴"]) return;
 
                 if (this.ProfileViewModel.ProfileModel.EMAIL != null && !this.ProfileViewModel.ProfileModel.AccessCodeVisible)
                 {
@@ -381,9 +381,9 @@ namespace MetaFrm.Razor
 
 
         #region Event
-        private async Task InputFileChangeEventArgs(Microsoft.AspNetCore.Components.Forms.InputFileChangeEventArgs e)
+        private async Task InputFileChangeEventArgs(InputFileChangeEventArgs e)
         {
-            Microsoft.AspNetCore.Components.Forms.IBrowserFile? DllFile;
+            IBrowserFile? DllFile;
             byte[] bytes;
 
 
@@ -393,7 +393,7 @@ namespace MetaFrm.Razor
 
                 if (DllFile.Size > 2048000)
                 {
-                    this.ModalShow("Warning", "The maximum image size is 2MB.", new() { { "Ok", Btn.Warning } }, null);
+                    this.ModalShow("Warning", this.Localization["최대 이미지 크기는 2MB입니다."], new() { { "Ok", Btn.Warning } }, null);
                     return;
                 }
 
