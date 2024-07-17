@@ -7,7 +7,7 @@
 
 <TitleControl Title="@Localization["프로필"]"></TitleControl>
 <CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))"
-             HeaderText="Profile" CssClass="@this.ProfileViewModel.ProfileModel.CssClassCard">
+             HeaderText="@Localization["프로필"]" CssClass="@this.ProfileViewModel.ProfileModel.CssClassCard">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.Save">
             <DataAnnotationsValidator />
