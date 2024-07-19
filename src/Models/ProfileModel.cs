@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MetaFrm.MVVM;
+using MetaFrm.Razor.Essentials.ComponentModel.DataAnnotations;
+using DisplayAttribute = System.ComponentModel.DataAnnotations.DisplayAttribute;
 
 namespace MetaFrm.Razor.Models
 {
@@ -20,23 +22,23 @@ namespace MetaFrm.Razor.Models
         /// <summary>
         /// NICKNAME
         /// </summary>
+        [Display(Name = "별명")]
         [Required]
         [MinLength(3)]
-        [Display(Name = "Nickname")]
         public string? NICKNAME { get; set; }
 
         /// <summary>
         /// FULLNAME
         /// </summary>
+        [Display(Name = "성명")]
         [Required]
         [MinLength(3)]
-        [Display(Name = "Full name")]
         public string? FULLNAME { get; set; }
 
         /// <summary>
         /// PHONENUMBER
         /// </summary>
-        [Display(Name = "Phone Number")]
+        [Display(Name = "전화번호")]
         public string? PHONENUMBER { get; set; }
 
         /// <summary>

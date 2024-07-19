@@ -358,7 +358,7 @@ namespace MetaFrm.Razor
                     this.timer.Stop();
                 }
 
-                this.InvokeStateHasChanged();
+                this.InvokeAsync(this.StateHasChanged);
             }
             catch (Exception)
             {
