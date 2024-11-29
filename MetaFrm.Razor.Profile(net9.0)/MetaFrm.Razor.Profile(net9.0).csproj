@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>MetaFrm.Razor</RootNamespace>
     <AssemblyName>MetaFrm.Razor.Profile</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageId>MetaFrm.Razor.Profile.net7.0</PackageId>
+    <PackageId>MetaFrm.Razor.Profile.net9.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>7.0.3.44</Version>
+    <Version>9.0.4.3</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
@@ -35,9 +35,9 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Core.net7.0" Version="7.0.3.44" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net7.0" Version="7.0.3.44" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.20" />
+    <PackageReference Include="MetaFrm.Core.net9.0" Version="9.0.4.3" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net9.0" Version="9.0.4.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
