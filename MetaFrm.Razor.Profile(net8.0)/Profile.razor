@@ -4,10 +4,10 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Web
 @inherits BaseComponent
+@implements IDisposable;
 
 <TitleControl Title="@Localization["프로필"]"></TitleControl>
-<CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))"
-             HeaderText="@Localization["프로필"]" CssClass="@this.ProfileViewModel.ProfileModel.CssClassCard">
+<CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" HeaderText="@Localization["프로필"]" CssClass="@this.CssClassCard">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.Save">
             <DataAnnotationsValidator />
@@ -31,32 +31,92 @@
                 </FieldControl>
             </div>
             <div class="row">
-                <FieldControl Label="@Localization["성명"]">
-                    <Control>
-                        <InputText id="fullname" class="form-control" placeholder="@($"* {Localization["성명"]}")" @bind-Value="this.ProfileViewModel.ProfileModel.FULLNAME" />
-                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.FULLNAME)" />
-                    </Control>
-                </FieldControl>
-                <FieldControl Label="@Localization["전화번호"]">
-                    <Control>
-                        <InputText id="phonenumber" class="form-control" placeholder="@Localization["전화번호"]" @bind-Value="this.ProfileViewModel.ProfileModel.PHONENUMBER" />
-                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PHONENUMBER)" />
-                    </Control>
-                </FieldControl>
+                @if (this.IsPersonVerification && this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION != null)
+                {
+                    <FieldControl Label="@Localization["성명"]">
+                        <Control>
+                            <InputText id="fullname" class="form-control" placeholder="@($"* {Localization["성명"]}")" @oninput="@(e => this.ProfileViewModel.ProfileModel.FULLNAME = e.Value?.ToString())" @bind-Value="this.ProfileViewModel.ProfileModel.FULLNAME" disabled />
+                            <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.FULLNAME)" />
+                        </Control>
+                    </FieldControl>
+                    <FieldControl Label="@Localization["전화번호"]">
+                        <Control>
+                            <InputText id="phonenumber" class="form-control" placeholder="@Localization["전화번호"]" @oninput="@(e => this.ProfileViewModel.ProfileModel.PHONENUMBER = e.Value?.ToString())" @bind-Value="this.ProfileViewModel.ProfileModel.PHONENUMBER" disabled />
+                            <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PHONENUMBER)" />
+                        </Control>
+                    </FieldControl>
+                }
+                else
+                {
+                    <FieldControl Label="@Localization["성명"]">
+                        <Control>
+                            <InputText id="fullname" class="form-control" placeholder="@($"* {Localization["성명"]}")" @oninput="@(e => this.ProfileViewModel.ProfileModel.FULLNAME = e.Value?.ToString())" @bind-Value="this.ProfileViewModel.ProfileModel.FULLNAME" />
+                            <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.FULLNAME)" />
+                        </Control>
+                    </FieldControl>
+                    <FieldControl Label="@Localization["전화번호"]">
+                        <Control>
+                            <InputText id="phonenumber" class="form-control" placeholder="@Localization["전화번호"]" @oninput="@(e => this.ProfileViewModel.ProfileModel.PHONENUMBER = e.Value?.ToString())" @bind-Value="this.ProfileViewModel.ProfileModel.PHONENUMBER" />
+                            <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PHONENUMBER)" />
+                        </Control>
+                    </FieldControl>
+                }
             </div>
             <div class="row">
                 <FieldControl Label="@Localization["비활성 날짜"]" Value="@($"{this.ProfileViewModel.ProfileModel.INACTIVE_DATE:yyyy-MM-dd HH:mm}")"></FieldControl>
+                @if (this.IsPersonVerification)
+                {
+                    @if (this.ProfileViewModel.ProfileModel.Org_FULLNAME_PHONENUMBER == $"{this.ProfileViewModel.ProfileModel.FULLNAME}{this.ProfileViewModel.ProfileModel.PHONENUMBER}")
+                    {
+                        @if (this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION == null)
+                        {
+                            @if (this.SaveButtonVisible)
+                            {
+                                <FieldControl Label="@Localization["실명인증"]">
+                                    <Control>
+                                        <button type="button" class="btn btn-primary btn-block w-100" @onclick="PersonVerification">@Localization["실명인증"]</button>
+                                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION)" />
+                                    </Control>
+                                </FieldControl>
+                            }
+                            else
+                            {
+                                <FieldControl Label="@Localization["실명인증 중지"]">
+                                    <Control>
+                                        <button type="button" class="btn btn-primary btn-block w-100" @onclick="@(e => { this.SaveButtonVisible = true; this.RemainTimePersonVerification = new TimeSpan(0); })">@Localization["실명인증 중지"]</button>
+                                        <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION)" />
+                                    </Control>
+                                </FieldControl>
+                            }
+                        }
+                        else
+                        {
+                            <FieldControl Label="@Localization["실명인증"]" Value="@($"{this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION:yyyy-MM-dd HH:mm}")"></FieldControl>
+                        }
+                    }
+                    else
+                    {
+                        <FieldControl Label="@Localization["실명인증"]">
+                            <Control>
+                                <span>@Localization["수정 완료 후 실명인증"]</span>
+                                <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION)" />
+                            </Control>
+                        </FieldControl>
+                    }
+                }
             </div>
 
-            <CommandControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" SaveIsSubmit="true" />
+            @if (this.SaveButtonVisible)
+            {
+                <CommandControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" SaveIsSubmit="true" />
+            }
         </EditForm>
     </Text>
 </CardControl>
 
 <hr />
 
-<CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))"
-             HeaderText="@Localization["탈퇴"]" CssClass="@this.ProfileViewModel.ProfileModel.CssClassCard">
+<CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" HeaderText="@Localization["탈퇴"]" CssClass="@this.CssClassCard">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.OnWithdrawalClick" OnInvalidSubmit="this.HandleInvalidSubmit">
             <DataAnnotationsValidator />

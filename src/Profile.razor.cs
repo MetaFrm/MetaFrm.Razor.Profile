@@ -1,6 +1,7 @@
 ﻿using MetaFrm.Alert;
 using MetaFrm.Control;
 using MetaFrm.Database;
+using MetaFrm.Maui.ApplicationModel;
 using MetaFrm.Razor.Models;
 using MetaFrm.Razor.ViewModels;
 using MetaFrm.Service;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Text;
 using System.Timers;
 
 namespace MetaFrm.Razor
@@ -23,9 +25,16 @@ namespace MetaFrm.Razor
 
         private bool _isFocusElement = false;//등록 버튼 클릭하고 AccessCode로 포커스가 한번만 가도록
 
+        [Inject] private IBrowser? Browser { get; set; }
+
         private TimeSpan RemainTimeOrg { get; set; } = new TimeSpan(0, 5, 0);
 
         private TimeSpan RemainTime { get; set; }
+        private TimeSpan RemainTimePersonVerification { get; set; }
+
+        private string? CssClassCard;
+        private bool IsPersonVerification;
+        private bool SaveButtonVisible = true;
         #endregion
 
 
@@ -37,13 +46,15 @@ namespace MetaFrm.Razor
         {
             try
             {
-                this.ProfileViewModel.ProfileModel.CssClassCard = this.GetAttribute(nameof(this.ProfileViewModel.ProfileModel.CssClassCard));
+                this.CssClassCard = this.GetAttribute(nameof(this.CssClassCard));
+                this.IsPersonVerification = this.GetAttributeBool(nameof(this.IsPersonVerification));
 
                 string[] time = this.GetAttribute("RemainingTime").Split(":");
 
                 this.RemainTimeOrg = new TimeSpan(time[0].ToInt(), time[1].ToInt(), time[2].ToInt());
 
                 this.RemainTime = new TimeSpan(this.RemainTimeOrg.Ticks);
+                this.RemainTimePersonVerification = new TimeSpan(this.RemainTimeOrg.Ticks);
             }
             catch (Exception)
             {
@@ -72,6 +83,37 @@ namespace MetaFrm.Razor
             {
                 this.JSRuntime?.InvokeVoidAsync("ElementFocus", "inputaccesscode");
                 this._isFocusElement = true;
+            }
+        }
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                try
+                {
+                    this.timer.Stop();
+                    this.timer.Elapsed -= Timer_Elapsed;
+                }
+                catch (Exception) { }
+
+                try
+                {
+                    this.timerPersonVerification.Stop();
+                    this.timerPersonVerification.Elapsed -= TimerPersonVerification_Elapsed;
+                }
+                catch (Exception) { }
             }
         }
         #endregion
@@ -111,6 +153,9 @@ namespace MetaFrm.Razor
                         this.ProfileViewModel.ProfileModel.RESPONSIBILITY_NAME = response.DataSet.DataTables[0].DataRows[0].String(nameof(ProfileModel.RESPONSIBILITY_NAME));
                         this.ProfileViewModel.ProfileModel.PROFILE_IMAGE = response.DataSet.DataTables[0].DataRows[0].String(nameof(ProfileModel.PROFILE_IMAGE));
                         this.ProfileViewModel.ProfileModel.INACTIVE_DATE = response.DataSet.DataTables[0].DataRows[0].DateTime(nameof(ProfileModel.INACTIVE_DATE));
+                        this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION = response.DataSet.DataTables[0].DataRows[0].DateTime(nameof(ProfileModel.PERSON_VERIFICATION));
+
+                        this.ProfileViewModel.ProfileModel.Org_FULLNAME_PHONENUMBER = $"{this.ProfileViewModel.ProfileModel.FULLNAME}{this.ProfileViewModel.ProfileModel.PHONENUMBER}";
                     }
                 }
                 else
@@ -248,9 +293,7 @@ namespace MetaFrm.Razor
         private async Task OnClickFunctionAsync(string action)
         {
             await Task.Delay(100);
-#pragma warning disable CA2012 // 올바르게 ValueTasks 사용
             this.JSRuntime?.InvokeVoidAsync("ElementFocus", "inputaccesscode");
-#pragma warning restore CA2012 // 올바르게 ValueTasks 사용
         }
 
         private void Withdrawal()
@@ -372,9 +415,74 @@ namespace MetaFrm.Razor
         {
             if (args.Key == "Enter" && this.ProfileViewModel.ProfileModel.AccessCodeVisible && this.ProfileViewModel.ProfileModel.AccessCode == this.ProfileViewModel.ProfileModel.InputAccessCode)
             {
-#pragma warning disable CA2012 // 올바르게 ValueTasks 사용
                 this.JSRuntime?.InvokeVoidAsync("ElementFocus", "password");
-#pragma warning restore CA2012 // 올바르게 ValueTasks 사용
+            }
+        }
+
+
+        private readonly System.Timers.Timer timerPersonVerification = new(1000);
+        private async void PersonVerification()
+        {
+            try
+            {
+                DateTime dateTime = DateTime.Now;
+
+                string url = string.Format(this.GetAttribute("PersonVerificationUrl")
+                    , $"{dateTime.Second:00}"
+                    , System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes(this.GetAttribute("PersonVerificationProjectName"))))
+                    , $"{dateTime.Minute:00}"
+                    , System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes($"{this.AuthState.UserID()},{this.ProfileViewModel.ProfileModel.FULLNAME},{this.ProfileViewModel.ProfileModel.PHONENUMBER}")))
+                    , $"{dateTime.Hour:00}");
+
+                if (Factory.Platform == Maui.Devices.DevicePlatform.Web)
+                {
+                    this.JSRuntime?.InvokeVoidAsync("window_open"
+                        , url
+                        , "auth_popup"
+                        , 410, 500);
+                }
+                else
+                {
+                    if (this.Browser != null)
+                        await this.Browser.OpenAsync(url, BrowserLaunchMode.SystemPreferred);
+                }
+
+                try
+                {
+                    this.timerPersonVerification.Elapsed -= TimerPersonVerification_Elapsed;
+                }
+                catch (Exception)
+                {
+                }
+                this.timerPersonVerification.Elapsed += TimerPersonVerification_Elapsed;
+                this.timerPersonVerification.Start();
+                this.SaveButtonVisible = false;
+            }
+            catch (Exception e)
+            {
+                this.ModalShow("An Exception has occurred.", e.Message, new() { { "Ok", Btn.Danger } }, null);
+            }
+        }
+        private void TimerPersonVerification_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                this.RemainTimePersonVerification = this.RemainTimePersonVerification.Add(new TimeSpan(0, 0, -1));
+
+                this.Search();
+
+                if (this.RemainTimePersonVerification.Ticks <= 0 || this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION != null)
+                {
+                    this.RemainTimePersonVerification = new TimeSpan(this.RemainTimeOrg.Ticks);
+                    this.timerPersonVerification.Stop();
+
+                    this.SaveButtonVisible = true;
+                }
+
+                this.InvokeAsync(this.StateHasChanged);
+            }
+            catch (Exception)
+            {
             }
         }
         #endregion

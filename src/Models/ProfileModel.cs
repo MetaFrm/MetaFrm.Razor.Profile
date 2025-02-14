@@ -42,6 +42,11 @@ namespace MetaFrm.Razor.Models
         public string? PHONENUMBER { get; set; }
 
         /// <summary>
+        /// Org_FULLNAME_PHONENUMBER
+        /// </summary>
+        public string? Org_FULLNAME_PHONENUMBER { get; set; }
+
+        /// <summary>
         /// RESPONSIBILITY_NAME
         /// </summary>
         public string? RESPONSIBILITY_NAME { get; set; }
@@ -55,6 +60,11 @@ namespace MetaFrm.Razor.Models
         /// INACTIVE_DATE
         /// </summary>
         public DateTime? INACTIVE_DATE { get; set; }
+
+        /// <summary>
+        /// PERSON_VERIFICATION
+        /// </summary>
+        public DateTime? PERSON_VERIFICATION { get; set; }
 
         /// <summary>
         /// AccessCodeVisible
@@ -84,11 +94,6 @@ namespace MetaFrm.Razor.Models
 
             }
         }
-
-        /// <summary>
-        /// CssClassCard
-        /// </summary>
-        public string? CssClassCard { get; set; }
 
         /// <summary>
         /// AccessCodeConfirmVisible
