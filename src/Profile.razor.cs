@@ -428,11 +428,8 @@ namespace MetaFrm.Razor
                 DateTime dateTime = DateTime.Now;
 
                 string url = string.Format(this.GetAttribute("PersonVerificationUrl")
-                    , $"{dateTime.Second:00}"
-                    , System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes(this.GetAttribute("PersonVerificationProjectName"))))
-                    , $"{dateTime.Minute:00}"
-                    , System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes($"{this.AuthState.UserID()},{this.ProfileViewModel.ProfileModel.FULLNAME},{this.ProfileViewModel.ProfileModel.PHONENUMBER}")))
-                    , $"{dateTime.Hour:00}");
+                    , System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes($"{dateTime.Second:00}{this.GetAttribute("PersonVerificationProjectName")}")))
+                    , System.Web.HttpUtility.UrlEncode(Convert.ToBase64String(Encoding.UTF8.GetBytes($"{dateTime.Minute:00}{this.AuthState.UserID()},{this.ProfileViewModel.ProfileModel.FULLNAME},{this.ProfileViewModel.ProfileModel.PHONENUMBER}"))));
 
                 if (Factory.Platform == Maui.Devices.DevicePlatform.Web)
                 {
