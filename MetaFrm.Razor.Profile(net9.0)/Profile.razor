@@ -31,7 +31,7 @@
                 </FieldControl>
             </div>
             <div class="row">
-                @if (this.IsPersonVerification && this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION != null)
+                @if ((this.IsPersonVerification && this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION != null) || !this.SaveButtonVisible)
                 {
                     <FieldControl Label="@Localization["성명"]">
                         <Control>

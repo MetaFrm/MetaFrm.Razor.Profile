@@ -420,7 +420,7 @@ namespace MetaFrm.Razor
         }
 
 
-        private readonly System.Timers.Timer timerPersonVerification = new(1000);
+        private readonly System.Timers.Timer timerPersonVerification = new(2000);
         private async void PersonVerification()
         {
             try
@@ -464,7 +464,7 @@ namespace MetaFrm.Razor
         {
             try
             {
-                this.RemainTimePersonVerification = this.RemainTimePersonVerification.Add(new TimeSpan(0, 0, -1));
+                this.RemainTimePersonVerification = this.RemainTimePersonVerification.Add(new TimeSpan(0, 0, -2));
 
                 this.Search();
 
