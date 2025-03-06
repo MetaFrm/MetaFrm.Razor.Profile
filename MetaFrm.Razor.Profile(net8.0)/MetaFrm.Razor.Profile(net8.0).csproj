@@ -10,7 +10,7 @@
     <PackageId>MetaFrm.Razor.Profile.net8.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>8.0.4.9</Version>
+    <Version>8.0.4.21</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
@@ -35,12 +35,9 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Core.net8.0" Version="8.0.4.6" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net8.0" Version="8.0.4.6" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.11" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
+    <PackageReference Include="MetaFrm.Core.net8.0" Version="8.0.4.21" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net8.0" Version="8.0.4.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.13" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
