@@ -35,6 +35,9 @@ namespace MetaFrm.Razor
         private string? CssClassCard;
         private bool IsPersonVerification;
         private bool SaveButtonVisible = true;
+        private bool IsScaleButton = true;
+
+        private decimal Scale = 2.0M;
         #endregion
 
 
@@ -48,6 +51,7 @@ namespace MetaFrm.Razor
             {
                 this.CssClassCard = this.GetAttribute(nameof(this.CssClassCard));
                 this.IsPersonVerification = this.GetAttributeBool(nameof(this.IsPersonVerification));
+                this.IsScaleButton = this.GetAttributeBool(nameof(this.IsScaleButton));
 
                 string[] time = this.GetAttribute("RemainingTime").Split(":");
 
@@ -67,12 +71,17 @@ namespace MetaFrm.Razor
         /// <param name="firstRender"></param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2012:올바르게 ValueTasks 사용", Justification = "<보류 중>")]
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
                 if (!this.AuthState.IsLogin())
                     this.Navigation?.NavigateTo("/", true);
+
+                string? scale = await this.GetItemAsStringAsync("Viewport.Scale");
+
+                if (scale != null && decimal.TryParse(scale, out decimal value))
+                    this.Scale = value;
 
                 this.Search();
 
@@ -511,6 +520,60 @@ namespace MetaFrm.Razor
 
                 this.ProfileViewModel.ProfileModel.PROFILE_IMAGE = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(bytes));
                 //this.StateHasChanged();
+            }
+        }
+        #endregion
+
+
+        #region ETC
+        private async void SetItemAsStringAsync(string key, string value)
+        {
+            try
+            {
+                if (this.LocalStorage != null)
+                    await this.LocalStorage.SetItemAsStringAsync($"{key}", value);
+            }
+            catch (Exception)
+            {
+            }
+        }
+        private async Task<string?> GetItemAsStringAsync(string key)
+        {
+            try
+            {
+                if (this.LocalStorage != null)
+                    return await this.LocalStorage.GetItemAsStringAsync($"{key}");
+            }
+            catch (Exception)
+            {
+            }
+
+            return null;
+        }
+        private async Task ZoomIn()
+        {
+            if (this.Scale < 5.0M)
+            {
+                this.Scale += 0.1M;
+                await this.SetScale();
+                ValueTask? _ = this.JSRuntime?.InvokeVoidAsync("ElementFocus", "zoomout");
+            }
+        }
+        private async Task ZoomOut()
+        {
+            if (this.Scale > 0.3M)
+            {
+                this.Scale -= 0.1M;
+                await this.SetScale();
+                ValueTask? _ = this.JSRuntime?.InvokeVoidAsync("ElementFocus", "zoomin");
+            }
+        }
+        private async Task SetScale()
+        {
+            if (this.JSRuntime != null)
+            {
+                this.SetItemAsStringAsync("Viewport.Scale", $"{this.Scale:0.#}");
+                await this.JSRuntime.InvokeVoidAsync("SetViewportScale", "", $"{this.Scale:0.#}");
             }
         }
         #endregion
