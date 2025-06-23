@@ -562,7 +562,14 @@ namespace MetaFrm.Razor
         }
         private async Task ZoomIn()
         {
-            if (this.Scale < 5.0M)
+            decimal max = 3.0M;
+
+            if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+                max = 1.0M;
+            else if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.Android)
+                max = 2.7M;
+
+            if (this.Scale < max)
             {
                 this.Scale += 0.1M;
                 await this.SetScale();
@@ -571,7 +578,14 @@ namespace MetaFrm.Razor
         }
         private async Task ZoomOut()
         {
-            if (this.Scale > 0.3M)
+            decimal min = 1.3M;
+
+            if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+                min = 0.3M;
+            else if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.Android)
+                min = 1.3M;
+
+            if (this.Scale > min)
             {
                 this.Scale -= 0.1M;
                 await this.SetScale();
@@ -583,14 +597,7 @@ namespace MetaFrm.Razor
             if (this.JSRuntime != null)
             {
                 this.SetItemAsStringAsync("Viewport.Scale", $"{this.Scale:0.#}");
-
-                if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
-                {
-                    await this.JSRuntime.InvokeVoidAsync("SetViewportScale", $"", $"{this.Scale:0.#}");
-                }
-                else
-                    await this.JSRuntime.InvokeVoidAsync("SetViewportScale", "", $"{this.Scale:0.#}");
-
+                await this.JSRuntime.InvokeVoidAsync("SetViewportScale", "", $"{this.Scale:0.#}");
             }
         }
         #endregion
