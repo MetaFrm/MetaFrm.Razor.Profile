@@ -10,7 +10,7 @@
     <PackageId>MetaFrm.Razor.Profile.net8.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>8.0.4.37</Version>
+    <Version>8.0.4.38</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework

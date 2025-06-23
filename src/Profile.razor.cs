@@ -583,7 +583,15 @@ namespace MetaFrm.Razor
             if (this.JSRuntime != null)
             {
                 this.SetItemAsStringAsync("Viewport.Scale", $"{this.Scale:0.#}");
-                await this.JSRuntime.InvokeVoidAsync("SetViewportScale", "", $"{this.Scale:0.#}");
+
+                if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+                {
+                    System.Drawing.Size browserDimension = await this.JSRuntime.InvokeAsync<System.Drawing.Size>("getDimensions", null);
+                    await this.JSRuntime.InvokeVoidAsync("SetViewportScale", $"{browserDimension.Width}", $"{this.Scale:0.#}");
+                }
+                else
+                    await this.JSRuntime.InvokeVoidAsync("SetViewportScale", "", $"{this.Scale:0.#}");
+
             }
         }
         #endregion
