@@ -2,6 +2,7 @@
 using MetaFrm.Control;
 using MetaFrm.Database;
 using MetaFrm.Maui.ApplicationModel;
+using MetaFrm.Maui.Devices;
 using MetaFrm.Razor.Models;
 using MetaFrm.Razor.ViewModels;
 using MetaFrm.Service;
@@ -82,6 +83,15 @@ namespace MetaFrm.Razor
 
                 if (scale != null && decimal.TryParse(scale, out decimal value))
                     this.Scale = value;
+                else
+                {
+                    if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.Android)
+                        this.Scale = 2.0M;
+                    else if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+                        this.Scale = 1.0M;
+                    else
+                        this.Scale = 2.0M;
+                }
 
                 this.Search();
 

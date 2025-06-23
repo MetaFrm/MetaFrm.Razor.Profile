@@ -172,6 +172,13 @@
     <div class="col-12 mt-1">
         <button id="zoomout" type="button" class="btn btn-outline-primary me-1 mb-4 float-end" @onclick="() => this.ZoomOut()"><span class="oi oi-minus"> @Localization["축소"]</span></button>
         <button id="zoomin" type="button" class="btn btn-outline-primary me-1 mb-4 float-end" @onclick="() => this.ZoomIn()"><span class="oi oi-plus"> @Localization["확대"]</span></button>
-        <span class="me-3 mt-2 mb-4 float-end">@($"{((this.Scale - 1.0M) / 1.0M * 100M):##0}%")</span>
+        @if (Factory.DeviceInfo.Platform == Maui.Devices.DevicePlatform.Android)
+        {
+            <span class="me-3 mt-2 mb-4 float-end">@($"{((this.Scale - 1.0M) / 1.0M * 100M):##0}%")</span>
+        }
+        else if (Factory.DeviceInfo.Platform == Maui.Devices.DevicePlatform.iOS)
+        {
+            <span class="me-3 mt-2 mb-4 float-end">@($"{((this.Scale) / 1.0M * 100M):##0}%")</span>
+        }
     </div>
 }
