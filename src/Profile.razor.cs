@@ -22,7 +22,7 @@ namespace MetaFrm.Razor
     public partial class Profile
     {
         #region Variable
-        internal ProfileViewModel ProfileViewModel { get; set; } = Factory.CreateViewModel<ProfileViewModel>();
+        internal ProfileViewModel ProfileViewModel { get; set; } = new();
 
         private bool _isFocusElement = false;//등록 버튼 클릭하고 AccessCode로 포커스가 한번만 가도록
 
@@ -48,6 +48,10 @@ namespace MetaFrm.Razor
         /// </summary>
         protected override void OnInitialized()
         {
+            base.OnInitialized();
+
+            this.ProfileViewModel = this.CreateViewModel<ProfileViewModel>();
+
             try
             {
                 this.CssClassCard = this.GetAttribute(nameof(this.CssClassCard));
@@ -71,7 +75,6 @@ namespace MetaFrm.Razor
         /// </summary>
         /// <param name="firstRender"></param>
         /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2012:올바르게 ValueTasks 사용", Justification = "<보류 중>")]
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -100,7 +103,7 @@ namespace MetaFrm.Razor
 
             if (this.ProfileViewModel.ProfileModel.AccessCodeVisible && !this._isFocusElement)
             {
-                this.JSRuntime?.InvokeVoidAsync("ElementFocus", "inputaccesscode");
+                ValueTask? _ = this.JSRuntime?.InvokeVoidAsync("ElementFocus", "inputaccesscode");
                 this._isFocusElement = true;
             }
         }
@@ -312,7 +315,7 @@ namespace MetaFrm.Razor
         private async Task OnClickFunctionAsync(string action)
         {
             await Task.Delay(100);
-            this.JSRuntime?.InvokeVoidAsync("ElementFocus", "inputaccesscode");
+            ValueTask? _ = this.JSRuntime?.InvokeVoidAsync("ElementFocus", "inputaccesscode");
         }
 
         private void Withdrawal()
@@ -434,7 +437,7 @@ namespace MetaFrm.Razor
         {
             if (args.Key == "Enter" && this.ProfileViewModel.ProfileModel.AccessCodeVisible && this.ProfileViewModel.ProfileModel.AccessCode == this.ProfileViewModel.ProfileModel.InputAccessCode)
             {
-                this.JSRuntime?.InvokeVoidAsync("ElementFocus", "password");
+                ValueTask? _ = this.JSRuntime?.InvokeVoidAsync("ElementFocus", "password");
             }
         }
 
@@ -452,7 +455,7 @@ namespace MetaFrm.Razor
 
                 if (Factory.Platform == Maui.Devices.DevicePlatform.Web)
                 {
-                    this.JSRuntime?.InvokeVoidAsync("window_open"
+                    ValueTask? _ = this.JSRuntime?.InvokeVoidAsync("window_open"
                         , url
                         , "auth_popup"
                         , 410, 500);

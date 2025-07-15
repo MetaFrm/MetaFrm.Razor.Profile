@@ -10,7 +10,7 @@
     <PackageId>MetaFrm.Razor.Profile.net9.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Meta Framework Razor Profile</Title>
-    <Version>9.0.4.43</Version>
+    <Version>9.0.4.51</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Description>Meta Framework
@@ -22,7 +22,11 @@
     <PackageTags>meta;framework;dotnet;maui;</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
   <ItemGroup>
     <Compile Include="..\src\Models\ProfileModel.cs" Link="Models\ProfileModel.cs" />
     <Compile Include="..\src\Profile.razor.cs" Link="Profile.razor.cs" />
@@ -35,9 +39,9 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Core.net9.0" Version="9.0.4.43" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net9.0" Version="9.0.4.43" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.6" />
+    <PackageReference Include="MetaFrm.Core.net9.0" Version="9.0.4.51" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net9.0" Version="9.0.4.51" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.7" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
