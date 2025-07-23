@@ -10,7 +10,7 @@
 <CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" HeaderText="@Localization["프로필"]" CssClass="@this.CssClassCard">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.Save">
-            <DataAnnotationsValidator />
+            <MetaFrmDataAnnotationsValidator />
 
             <div class="row pb-2">
                 <FieldControl Label="" IsColon="false">
@@ -119,7 +119,7 @@
 <CardControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" HeaderText="@Localization["탈퇴"]" CssClass="@this.CssClassCard">
     <Text>
         <EditForm class="container" Model="@this.ProfileViewModel.ProfileModel" OnValidSubmit="this.OnWithdrawalClick" OnInvalidSubmit="this.HandleInvalidSubmit">
-            <DataAnnotationsValidator />
+            <MetaFrmDataAnnotationsValidator />
 
 
             @if (!this.ProfileViewModel.ProfileModel.AccessCodeVisible)

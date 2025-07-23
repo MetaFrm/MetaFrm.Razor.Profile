@@ -22,22 +22,18 @@ namespace MetaFrm.Razor
     public partial class Profile
     {
         #region Variable
-        internal ProfileViewModel ProfileViewModel { get; set; } = new();
-
+        private ProfileViewModel ProfileViewModel { get; set; } = new(null);
         private bool _isFocusElement = false;//등록 버튼 클릭하고 AccessCode로 포커스가 한번만 가도록
 
-        [Inject] private IBrowser? Browser { get; set; }
-
+        [Inject]
+        private IBrowser? Browser { get; set; }
         private TimeSpan RemainTimeOrg { get; set; } = new TimeSpan(0, 5, 0);
-
         private TimeSpan RemainTime { get; set; }
         private TimeSpan RemainTimePersonVerification { get; set; }
-
         private string? CssClassCard;
         private bool IsPersonVerification;
         private bool SaveButtonVisible = true;
         private bool IsScaleButton = true;
-
         private decimal Scale = 2.0M;
         #endregion
 
@@ -146,10 +142,10 @@ namespace MetaFrm.Razor
         {
             Response response;
 
+            if (this.ProfileViewModel.IsBusy) return;
+
             try
             {
-                if (this.ProfileViewModel.IsBusy) return;
-
                 this.ProfileViewModel.IsBusy = true;
 
                 ServiceData serviceData = new()
@@ -163,7 +159,7 @@ namespace MetaFrm.Razor
 
                 if (response.Status == Status.OK)
                 {
-                    this.ProfileViewModel.ProfileModel = new();
+                    this.ProfileViewModel.ProfileModel = new(this.Localization);
 
                     if (response.DataSet != null && response.DataSet.DataTables.Count > 0 && response.DataSet.DataTables[0].DataRows.Count > 0)
                     {
@@ -202,16 +198,13 @@ namespace MetaFrm.Razor
         {
             Response? response;
 
+            if (this.ProfileViewModel.IsBusy) return;
+            if (this.ProfileViewModel.ProfileModel.USER_ID == null || this.ProfileViewModel.ProfileModel.USER_ID <= 0) return;
+
             response = null;
 
             try
             {
-                if (this.ProfileViewModel.IsBusy)
-                    return;
-
-                if (this.ProfileViewModel.ProfileModel.USER_ID == null || this.ProfileViewModel.ProfileModel.USER_ID <= 0)
-                    return;
-
                 this.ProfileViewModel.IsBusy = true;
 
                 ServiceData serviceData = new()
@@ -259,6 +252,8 @@ namespace MetaFrm.Razor
 
         private async Task<bool> OnWithdrawalClick()
         {
+            if (this.ProfileViewModel.IsBusy) return false;
+
             try
             {
                 this.ProfileViewModel.IsBusy = true;
@@ -285,7 +280,7 @@ namespace MetaFrm.Razor
 
                         if (response.Status == Status.OK)
                         {
-                            this.ToastShow("Withdrawal", this.Localization["탈퇴 완료 되었습니다."], ToastDuration.Long);
+                            this.ToastShow("탈퇴", this.Localization["탈퇴 완료 되었습니다."], ToastDuration.Long);
 
                             this.OnAction(this, new MetaFrmEventArgs { Action = "Logout" });
                             return true;
@@ -294,7 +289,7 @@ namespace MetaFrm.Razor
                         {
                             if (response.Message != null)
                             {
-                                this.ModalShow("Withdrawal", response.Message, new() { { "Ok", Btn.Warning } }, EventCallback.Factory.Create<string>(this, OnClickFunctionAsync));
+                                this.ModalShow("탈퇴", response.Message, new() { { "Ok", Btn.Warning } }, EventCallback.Factory.Create<string>(this, OnClickFunctionAsync));
                             }
                         }
                     }
@@ -320,14 +315,16 @@ namespace MetaFrm.Razor
 
         private void Withdrawal()
         {
-            this.ModalShow($"Question", this.Localization["탈퇴하시겠습니까?"], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.WithdrawalCheck));
+            this.ModalShow($"탈퇴", this.Localization["탈퇴하시겠습니까?"], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.WithdrawalCheck));
         }
 
         private async void WithdrawalCheck(string action)
         {
+            if (action != this.Localization["탈퇴"]) return;
+            if (this.ProfileViewModel.IsBusy) return;
+
             try
             {
-                if (action != this.Localization["탈퇴"]) return;
 
                 this.ProfileViewModel.IsBusy = true;
 
@@ -361,7 +358,7 @@ namespace MetaFrm.Razor
                         {
                             if (response.Message != null)
                             {
-                                this.ModalShow("Withdrawal", response.Message, new() { { "Ok", Btn.Warning } }, null);
+                                this.ModalShow("탈퇴", response.Message, new() { { "Ok", Btn.Warning } }, null);
                             }
                         }
                     }

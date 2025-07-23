@@ -1,5 +1,6 @@
 ﻿using MetaFrm.MVVM;
 using MetaFrm.Razor.Essentials.ComponentModel.DataAnnotations;
+using Microsoft.Extensions.Localization;
 using DisplayAttribute = System.ComponentModel.DataAnnotations.DisplayAttribute;
 
 namespace MetaFrm.Razor.Models
@@ -7,7 +8,7 @@ namespace MetaFrm.Razor.Models
     /// <summary>
     /// ProfileModel
     /// </summary>
-    public class ProfileModel
+    public class ProfileModel : BaseViewModel
     {
         /// <summary>
         /// USER_ID
@@ -99,5 +100,16 @@ namespace MetaFrm.Razor.Models
         /// AccessCodeConfirmVisible
         /// </summary>
         public bool AccessCodeConfirmVisible { get; set; }
+
+        /// <summary>
+        /// ProfileModel
+        /// </summary>
+        public ProfileModel() : base() { }
+
+        /// <summary>
+        /// ProfileModel
+        /// </summary>
+        /// <param name="localization"></param>
+        public ProfileModel(IStringLocalizer? localization) : base(localization) { }
     }
 }
