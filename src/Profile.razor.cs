@@ -180,7 +180,7 @@ namespace MetaFrm.Razor
                 {
                     if (response.Message != null)
                     {
-                        this.ModalShow("Warning", response.Message, new() { { "Ok", Btn.Warning } }, null);
+                        this.ModalShow("프로필", response.Message, new() { { "Ok", Btn.Warning } }, null);
                     }
                 }
             }
@@ -223,14 +223,14 @@ namespace MetaFrm.Razor
 
                 if (response.Status == Status.OK)
                 {
-                    this.ToastShow("Completed", this.Localization["프로필이 성공적으로 등록되었습니다."], ToastDuration.Long);
+                    this.ToastShow("프로필", this.Localization["프로필이 성공적으로 등록되었습니다."], ToastDuration.Long);
                     this.OnAction(this, new MetaFrmEventArgs { Action = "ProfileImage", Value = null });
                 }
                 else
                 {
                     if (response.Message != null)
                     {
-                        this.ModalShow("Warning", response.Message, new() { { "Ok", Btn.Warning } }, null);
+                        this.ModalShow("프로필", response.Message, new() { { "Ok", Btn.Warning } }, null);
                     }
                 }
             }
@@ -325,7 +325,6 @@ namespace MetaFrm.Razor
 
             try
             {
-
                 this.ProfileViewModel.IsBusy = true;
 
                 if (this.AuthState.IsLogin())
@@ -349,9 +348,9 @@ namespace MetaFrm.Razor
                             if (response.DataSet != null && response.DataSet.DataTables.Count > 0 && response.DataSet.DataTables[0].DataRows.Count > 0)
                             {
                                 if (response.DataSet.DataTables[0].DataRows[0].Int("CNT") > 0)
-                                    this.ModalShow($"Question", this.Localization[this.GetAttribute("WithdrawalCheckQuestion")], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.GetAccessCode));
+                                    this.ModalShow($"탈퇴", this.Localization[this.GetAttribute("WithdrawalCheckQuestion")], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.GetAccessCode));
                                 else
-                                    this.ModalShow($"Question", this.Localization["정말 탈퇴하시겠습니까?"], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.GetAccessCode));
+                                    this.ModalShow($"탈퇴", this.Localization["정말 탈퇴하시겠습니까?"], new() { { this.Localization["탈퇴"], Btn.Danger }, { "Cancel", Btn.Primary } }, EventCallback.Factory.Create<string>(this, this.GetAccessCode));
                             }
                         }
                         else
@@ -517,7 +516,7 @@ namespace MetaFrm.Razor
 
                 if (DllFile.Size > 2048000)
                 {
-                    this.ModalShow("Warning", this.Localization["최대 이미지 크기는 2MB입니다."], new() { { "Ok", Btn.Warning } }, null);
+                    this.ModalShow("프로필", this.Localization["최대 이미지 크기는 2MB입니다."], new() { { "Ok", Btn.Warning } }, null);
                     return;
                 }
 
