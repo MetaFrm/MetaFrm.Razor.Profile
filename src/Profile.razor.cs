@@ -123,6 +123,7 @@ namespace MetaFrm.Razor
                 {
                     this.timer.Stop();
                     this.timer.Elapsed -= Timer_Elapsed;
+                    this.timer.Dispose();
                 }
                 catch (Exception) { }
 
@@ -130,6 +131,7 @@ namespace MetaFrm.Razor
                 {
                     this.timerPersonVerification.Stop();
                     this.timerPersonVerification.Elapsed -= TimerPersonVerification_Elapsed;
+                    this.timerPersonVerification.Dispose();
                 }
                 catch (Exception) { }
             }
@@ -530,6 +532,11 @@ namespace MetaFrm.Razor
                 this.ProfileViewModel.ProfileModel.PROFILE_IMAGE = string.Format("data:image/png;base64,{0}", Convert.ToBase64String(bytes));
                 //this.StateHasChanged();
             }
+        }
+
+        private void OnPasswordResetClick()
+        {
+            this.OnAction(this, new MetaFrmEventArgs { Action = "PasswordReset" });
         }
         #endregion
 

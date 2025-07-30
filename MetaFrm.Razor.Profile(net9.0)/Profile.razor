@@ -74,7 +74,7 @@
                             {
                                 <FieldControl Label="@Localization["실명인증"]">
                                     <Control>
-                                        <button type="button" class="btn btn-primary btn-block w-100" @onclick="PersonVerification">@Localization["실명인증"]</button>
+                                        <button type="button" class="btn btn-primary btn-block w-100" @onclick="this.PersonVerification">@Localization["실명인증"]</button>
                                         <ValidationMessage For="@(()=>this.ProfileViewModel.ProfileModel.PERSON_VERIFICATION)" />
                                     </Control>
                                 </FieldControl>
@@ -108,7 +108,7 @@
 
             @if (this.SaveButtonVisible)
             {
-                <CommandControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" SaveIsSubmit="true" />
+                <CommandControl TItem="ProfileModel" SelectItem="this.ProfileViewModel.ProfileModel" SelectItemKeyProperty="@(nameof(this.ProfileViewModel.ProfileModel.USER_ID))" SaveIsSubmit="true" CssClassInitIcon="" TextInit="암호 재설정" Init="this.OnPasswordResetClick" />
             }
         </EditForm>
     </Text>
