@@ -84,9 +84,9 @@ namespace MetaFrm.Razor
                     this.Scale = value;
                 else
                 {
-                    if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.Android)
+                    if (Factory.Platform == DevicePlatform.Android)
                         this.Scale = 2.0M;
-                    else if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+                    else if (Factory.Platform == DevicePlatform.iOS)
                         this.Scale = 1.0M;
                     else
                         this.Scale = 2.0M;
@@ -570,9 +570,9 @@ namespace MetaFrm.Razor
         {
             decimal max = 3.0M;
 
-            if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+            if (Factory.Platform == DevicePlatform.iOS)
                 max = 1.0M;
-            else if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.Android)
+            else if (Factory.Platform == DevicePlatform.Android)
                 max = 2.7M;
 
             if (this.Scale < max)
@@ -586,9 +586,9 @@ namespace MetaFrm.Razor
         {
             decimal min = 1.3M;
 
-            if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.iOS)
+            if (Factory.Platform == DevicePlatform.iOS)
                 min = 0.3M;
-            else if (Factory.DeviceInfo != null && Factory.DeviceInfo.Platform == DevicePlatform.Android)
+            else if (Factory.Platform == DevicePlatform.Android)
                 min = 1.3M;
 
             if (this.Scale > min)
