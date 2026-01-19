@@ -265,7 +265,7 @@ namespace MetaFrm.Razor
                     Response response;
 
 
-                    if (!this.ProfileViewModel.ProfileModel.EMAIL.IsNullOrEmpty() && !this.ProfileViewModel.ProfileModel.InputAccessCode.IsNullOrEmpty()
+                    if (!string.IsNullOrEmpty(this.ProfileViewModel.ProfileModel.EMAIL) && !string.IsNullOrEmpty(this.ProfileViewModel.ProfileModel.InputAccessCode)
                         && this.ProfileViewModel.ProfileModel.AccessCode == this.ProfileViewModel.ProfileModel.InputAccessCode)
                     {
                         ServiceData serviceData = new()
