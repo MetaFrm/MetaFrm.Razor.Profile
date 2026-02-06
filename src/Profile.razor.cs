@@ -546,8 +546,8 @@ namespace MetaFrm.Razor
         {
             try
             {
-                if (this.Local != null)
-                    await this.Local.SetItemAsStringAsync($"{key}", value);
+                if (this.LocalStorage != null)
+                    await this.LocalStorage.SetItemAsStringAsync($"{key}", value);
             }
             catch (Exception)
             {
@@ -557,8 +557,8 @@ namespace MetaFrm.Razor
         {
             try
             {
-                if (this.Local != null)
-                    return await this.Local.GetItemAsStringAsync($"{key}");
+                if (this.LocalStorage != null)
+                    return await this.LocalStorage.GetItemAsStringAsync($"{key}");
             }
             catch (Exception)
             {
