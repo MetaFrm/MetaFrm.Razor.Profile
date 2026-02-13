@@ -1,27 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>MetaFrm.Razor</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <AssemblyName>MetaFrm.Razor.Profile</AssemblyName>
-    <ApplicationIcon>icon.ico</ApplicationIcon>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <PackageId>MetaFrm.Razor.Profile.net10.0</PackageId>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Title>Meta Framework Razor Profile</Title>
-    <Version>10.0.1.20</Version>
+    <PackageId>MetaFrm.Razor.Profile.net10.0</PackageId>
+    <Version>10.0.3.0</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
-    <Description>Meta Framework
-(Multi platform &amp; Meta management)</Description>
-    <Product>Meta Framework Razor Profile</Product>
     <Copyright>Copyright 2026. dsun all rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/MetaFrm/MetaFrm.Razor.Profile</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MetaFrm/MetaFrm.Razor.Profile</RepositoryUrl>
     <PackageTags>meta;framework;dotnet;maui;</PackageTags>
-    <PackageIcon>icon.png</PackageIcon>
     <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
+    <Title>Meta Framework Razor Profile</Title>
+    <Description>Meta Framework
+(Multi platform &amp; Meta management)</Description>
+    <Product>Meta Framework Razor Profile</Product>
+    <PackageIcon>icon.png</PackageIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
@@ -39,9 +39,9 @@
     <SupportedPlatform Include="browser" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Core.net10.0" Version="10.0.1.20" />
-    <PackageReference Include="MetaFrm.Razor.Essentials.net10.0" Version="10.0.1.20" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.2" />
+    <PackageReference Include="MetaFrm.Core.net10.0" Version="10.0.3" />
+    <PackageReference Include="MetaFrm.Razor.Essentials.net10.0" Version="10.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
