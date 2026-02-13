@@ -188,7 +188,8 @@ namespace MetaFrm.Razor
             }
             catch (Exception e)
             {
-                this.ModalShow("An Exception has occurred.", e.Message, new() { { "Ok", Btn.Danger } }, null);
+                Factory.Logger.Error(e, "Profile.Search");
+                //this.ModalShow("An Exception has occurred.", e.Message, new() { { "Ok", Btn.Danger } }, null);
             }
             finally
             {
